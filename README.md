@@ -32,11 +32,3 @@ La empresa Group S.A.S la cual cuenta con multiples tiendas pequeñas, necesita 
 Usaremos: 
 		MYSQL - Workbench (Gestor de base de datos)
 		Github (Repositorio)
-
-IMG:
-
-![test](https://user-images.githubusercontent.com/65730544/82602060-19d42080-9b76-11ea-9a6c-b578ae84c231.PNG)
-![test](https://user-images.githubusercontent.com/65730544/82602060-19d42080-9b76-11ea-9a6c-b578ae84c231.PNG)
-![test](https://user-images.githubusercontent.com/65730544/82602060-19d42080-9b76-11ea-9a6c-b578ae84c231.PNG)
-![](Imgs/test.PNG)
-<img src="Imgs/test.PNG">
