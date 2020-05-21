@@ -34,4 +34,4 @@ Usaremos:
 		Github (Repositorio)
 
 IMG:
-![alt text](https://github.com/DanielTabordaVelez/Mysql/DanielTabordaVelez/Mysql/master/Imgs/test.png?raw=true)
+![Alt text](Mysql/Imgs/test.png?raw=true "IMG")
