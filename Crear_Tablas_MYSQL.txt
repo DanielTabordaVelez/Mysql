@@ -1,0 +1,254 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema DBGroupS.A.S
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema DBGroupS.A.S
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `DBGroupS.A.S` DEFAULT CHARACTER SET utf8 ;
+USE `DBGroupS.A.S` ;
+
+-- -----------------------------------------------------
+-- Table `DBGroupS.A.S`.`CLIENTE`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `DBGroupS.A.S`.`CLIENTE` (
+  `cedula` VARCHAR(10) NOT NULL,
+  `nombre1` VARCHAR(15) NOT NULL,
+  `nombre2` VARCHAR(15) NULL,
+  `apellido1` VARCHAR(15) NOT NULL,
+  `apellido2` VARCHAR(15) NULL,
+  `direccion` VARCHAR(30) NOT NULL,
+  PRIMARY KEY (`cedula`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `DBGroupS.A.S`.`PRODUCTO`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `DBGroupS.A.S`.`PRODUCTO` (
+  `idProducto` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NOT NULL,
+  `precio` DECIMAL NOT NULL,
+  PRIMARY KEY (`idProducto`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `DBGroupS.A.S`.`EMPLEADO`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `DBGroupS.A.S`.`EMPLEADO` (
+  `cedula` VARCHAR(10) NOT NULL,
+  `nombre1` VARCHAR(15) NOT NULL,
+  `nombre2` VARCHAR(15) NULL,
+  `apellido1` VARCHAR(15) NOT NULL,
+  `apellido2` VARCHAR(15) NULL,
+  PRIMARY KEY (`cedula`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `DBGroupS.A.S`.`EMPRESAAYUDA`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `DBGroupS.A.S`.`EMPRESAAYUDA` (
+  `idEmpresaAyuda` INT NOT NULL,
+  `nombre` VARCHAR(45) NOT NULL,
+  `telefono` VARCHAR(10) NOT NULL,
+  `direccion` VARCHAR(30) NOT NULL,
+  PRIMARY KEY (`idEmpresaAyuda`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `DBGroupS.A.S`.`CAJERO`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `DBGroupS.A.S`.`CAJERO` (
+  `idCajero` INT NOT NULL AUTO_INCREMENT,
+  `tipo` VARCHAR(45) NULL,
+  `cedulaEmpleado` VARCHAR(10) NOT NULL,
+  `idEmpresaAyuda` INT NOT NULL,
+  PRIMARY KEY (`idCajero`),
+  INDEX `cedulaEmpleados_idx` (`cedulaEmpleado` ASC) VISIBLE,
+  INDEX `idEmpresaAyuda_idx` (`idEmpresaAyuda` ASC) VISIBLE,
+  CONSTRAINT `cedulaEmpleados`
+    FOREIGN KEY (`cedulaEmpleado`)
+    REFERENCES `DBGroupS.A.S`.`EMPLEADO` (`cedula`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `idEmpresaAyuda`
+    FOREIGN KEY (`idEmpresaAyuda`)
+    REFERENCES `DBGroupS.A.S`.`EMPRESAAYUDA` (`idEmpresaAyuda`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `DBGroupS.A.S`.`TIENDA`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `DBGroupS.A.S`.`TIENDA` (
+  `idTienda` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NOT NULL,
+  `direccion` VARCHAR(30) NOT NULL,
+  `idCajero` INT NOT NULL,
+  PRIMARY KEY (`idTienda`),
+  INDEX `idCajeros_idx` (`idCajero` ASC) VISIBLE,
+  CONSTRAINT `idCajeros`
+    FOREIGN KEY (`idCajero`)
+    REFERENCES `DBGroupS.A.S`.`CAJERO` (`idCajero`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `DBGroupS.A.S`.`PROVEEDOR`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `DBGroupS.A.S`.`PROVEEDOR` (
+  `idProveedor` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NOT NULL,
+  `telefono` VARCHAR(10) NOT NULL,
+  `direccion` VARCHAR(30) NOT NULL,
+  PRIMARY KEY (`idProveedor`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `DBGroupS.A.S`.`FACTURATIENDA`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `DBGroupS.A.S`.`FACTURATIENDA` (
+  `idFacturaTienda` INT NOT NULL AUTO_INCREMENT,
+  `total` DECIMAL NOT NULL,
+  `fecha` DATE NOT NULL,
+  PRIMARY KEY (`idFacturaTienda`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `DBGroupS.A.S`.`FACTURAPROVEEDOR`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `DBGroupS.A.S`.`FACTURAPROVEEDOR` (
+  `idFacturaProveedor` INT NOT NULL AUTO_INCREMENT,
+  `total` DECIMAL NOT NULL,
+  `fecha` DATE NOT NULL,
+  PRIMARY KEY (`idFacturaProveedor`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `DBGroupS.A.S`.`ALMACEN`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `DBGroupS.A.S`.`ALMACEN` (
+  `idAlmacen` INT NOT NULL AUTO_INCREMENT,
+  `capacidad(m2)` INT NOT NULL,
+  `disponibilidad` TINYINT NOT NULL,
+  PRIMARY KEY (`idAlmacen`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `DBGroupS.A.S`.`cREQUIERE`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `DBGroupS.A.S`.`cREQUIERE` (
+  `idFacturaTienda` INT NOT NULL,
+  `idProducto` INT NOT NULL,
+  `cedulaCliente` VARCHAR(20) NOT NULL,
+  INDEX `cedulaClientes_idx` (`cedulaCliente` ASC) VISIBLE,
+  INDEX `idProductos_idx` (`idProducto` ASC) VISIBLE,
+  INDEX `idFacturaTiendas_idx` (`idFacturaTienda` ASC) VISIBLE,
+  CONSTRAINT `cedulaClientes`
+    FOREIGN KEY (`cedulaCliente`)
+    REFERENCES `DBGroupS.A.S`.`CLIENTE` (`cedula`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `idProductos`
+    FOREIGN KEY (`idProducto`)
+    REFERENCES `DBGroupS.A.S`.`PRODUCTO` (`idProducto`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `idFacturaTiendas`
+    FOREIGN KEY (`idFacturaTienda`)
+    REFERENCES `DBGroupS.A.S`.`FACTURATIENDA` (`idFacturaTienda`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `DBGroupS.A.S`.`pTiene`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `DBGroupS.A.S`.`pTiene` (
+  `idProducto` INT NOT NULL,
+  `idTienda` INT NOT NULL,
+  INDEX `idProductos_idx` (`idProducto` ASC) VISIBLE,
+  INDEX `idTiendas_idx` (`idTienda` ASC) VISIBLE,
+  CONSTRAINT `idProductos2`
+    FOREIGN KEY (`idProducto`)
+    REFERENCES `DBGroupS.A.S`.`PRODUCTO` (`idProducto`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `idTiendas`
+    FOREIGN KEY (`idTienda`)
+    REFERENCES `DBGroupS.A.S`.`TIENDA` (`idTienda`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `DBGroupS.A.S`.`tTiene`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `DBGroupS.A.S`.`tTiene` (
+  `idAlmacen` INT NOT NULL,
+  `idTienda` INT NOT NULL,
+  INDEX `idAlmacenes_idx` (`idAlmacen` ASC) VISIBLE,
+  INDEX `idTiendass_idx` (`idTienda` ASC) VISIBLE,
+  CONSTRAINT `idAlmacenes`
+    FOREIGN KEY (`idAlmacen`)
+    REFERENCES `DBGroupS.A.S`.`ALMACEN` (`idAlmacen`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `idTiendass`
+    FOREIGN KEY (`idTienda`)
+    REFERENCES `DBGroupS.A.S`.`TIENDA` (`idTienda`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `DBGroupS.A.S`.`tRequiere`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `DBGroupS.A.S`.`tRequiere` (
+  `idTienda` INT NOT NULL,
+  `idProveedor` INT NOT NULL,
+  `idFacturaProveedor` INT NOT NULL,
+  INDEX `idTiendas_idx` (`idTienda` ASC) VISIBLE,
+  INDEX `idProveedores_idx` (`idProveedor` ASC) VISIBLE,
+  INDEX `idFacturasProveedores_idx` (`idFacturaProveedor` ASC) VISIBLE,
+  CONSTRAINT `idTiendas1`
+    FOREIGN KEY (`idTienda`)
+    REFERENCES `DBGroupS.A.S`.`TIENDA` (`idTienda`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `idProveedores`
+    FOREIGN KEY (`idProveedor`)
+    REFERENCES `DBGroupS.A.S`.`PROVEEDOR` (`idProveedor`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `idFacturasProveedores`
+    FOREIGN KEY (`idFacturaProveedor`)
+    REFERENCES `DBGroupS.A.S`.`FACTURAPROVEEDOR` (`idFacturaProveedor`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
