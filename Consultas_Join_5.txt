@@ -1,0 +1,9 @@
+1- SELECT nombre FROM tienda INNER JOIN trequiere ON tienda.idTienda = trequiere.idTienda;
+
+2- SELECT `capacidad(m2)` FROM almacen LEFT JOIN ttiene ON almacen.idTienda = ttiene.idTienda;
+
+3- SELECT DISTINCT nombre1,apellido1 FROM  cliente INNER JOIN crequiere ON cedulaCliente = crequiere.cedulaCliente;
+
+4- SELECT crequiere.idFacturaTienda FROM crequiere RIGHT JOIN facturatienda ON idFacturaTienda = idFacturaTienda;
+
+5- SELECT proveedor.idProveedor, idTienda, idFacturaProveedor FROM proveedor RIGHT JOIN trequiere ON proveedor.idProveedor = trequiere.idProveedor;
