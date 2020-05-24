@@ -1,0 +1,23 @@
+10 CONSULTAS: 
+
+Operadores relacionales & operadores lógicpos
+
+1- SELECT cedulaCliente FROM crequiere WHERE idFacturaTienda = idProducto;
+
+2- SELECT * FROM facturatienda WHERE total != 1000;
+
+3- SELECT nombre1, apellido1 FROM empleado WHERE nombre1 = "pedro";
+
+4- SELECT nombre, direccion FROM tienda WHERE nombre = "pablo" AND direccion = "cll 155 c b 70";
+
+5- SELECT telefono,direccion FROM proveedor ORDER BY telefono ASC;
+
+6- SELECT DISTINCT total FROM facturaproveedor WHERE total > 500;
+
+7- SELECT DISTINCT nombre1 FROM cliente;
+
+8- SELECT `capacidad(m2)`, disponibilidad FROM almacen WHERE `capacidad(m2)` > 100 AND disponibilidad = true;
+
+9- SELECT idTienda, idProveedor FROM trequiere WHERE idTienda >5;
+
+10- SELECT * FROM cajero WHERE cedulaEmpleado = "1232123221";
